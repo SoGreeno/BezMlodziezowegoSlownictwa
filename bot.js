@@ -2,21 +2,41 @@ const { Telegraf } = require('telegraf');
 
 const bot = new Telegraf('95784356:646566696e797479776e69652061706920646f206d6f6a65676f20626f7461');
 
+// jesli sa tacy co cie wnerwiaja tym slownictwem, mozesz im dac tymczasowego muta, co prawda jeszcze tego nie zrobiłem, więc to poprostu pusta zmienna
+const punishUsers = false;
+
 // ochydne mlodziezowe slowa ktore chcemy cenzurowac
 const wordReplies = {
     'rel': 'utożsamiam się',
     'bambik': 'żółtodziób',
     'fr': 'do prawdy',
     'randomowy': 'losowy',
+    'randomowo': 'losowo',
     'bff': 'najlepszy kolega',
-    'pov': 'wyobraz sobie, że',
-    'cringe': 'żenada',
+    'pov': 'wyobraź sobie, że',
     'imo': 'myśle, że',
-    'r/woooosh': 'nie zrozumiałeś żartu',
-    'i use arch btw': 'jestem denerwujący i nudzi mnie sie w życiu', // tak na wypadek
     'gyatt': 'dupa',
     'rizz': 'charyzmat',
+    'goat': 'najlepszy wszechczasów',
+    'low key': 'po cichu',
+    'lowkey': 'po cichu',
+    'npc': 'prostak',
+    'npcty': 'prostacy',
+    'side eye': 'wzrok bazyliszka',
+    'side-eye': 'wzrok bazyliszka',
+    'sideeye': 'wzrok bazyliszka',
+    'slay': 'świetnie',
+    'cringe': 'żenada',
+    //'baza': 'i ja to rozumiem',
+    //'^': 'zgadzam sie z stwierdzeniem powyżej'
+    //'+1': 'zgadzam sie z tobą'
+    //'-1': 'nie zgadzam sie z tobą'
 };
+
+bot.command('karaj', (ctx) => {
+    punishUsers == true;
+    ctx.reply(`Dobra! Od teraz będę karać uciszeniem każdego, co powie z młodzieżowych słów.`);
+  });
 
 bot.use(async (ctx, next) => {
   if (ctx.message && ctx.message.text) {
@@ -29,6 +49,9 @@ bot.use(async (ctx, next) => {
     if (modifiedText !== ctx.message.text) {
       await ctx.deleteMessage(ctx.message.message_id);// kasujemy ta wiadomosc...
       await ctx.reply(`@${ctx.message.from.username}: ${modifiedText}`); // ... i dajemy naprawiona
+        if (punishUsers == true) {
+            //pozniej zrobie tak ze dostajesz muta
+        }
     }
   }
 
